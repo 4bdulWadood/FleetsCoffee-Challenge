@@ -12,29 +12,28 @@
 //The Map Object in JS holds key-value pairs and remembers the original insertion order of the keys.
 //We can use the Map Object!
 
-const map1 = new Map();
+const map1: Map<string, number> = new Map();
 
-function firstNonRepeated(str){
-    str2=str.toLowerCase();
-    for(const char of str2){
-        if(map1.get(char)!=undefined){
-            map1.set(char, map1.get(char)+1);
-        }else{
-            map1.set(char, 0);
-        }
+function firstNonRepeated(str: string): string {
+  const str2: string = str.toLowerCase();
+  
+  for (const char of str2) {
+    if (map1.has(char)) {
+      map1.set(char, map1.get(char)! + 1);
+    } else {
+      map1.set(char, 0);
     }
+  }
 
-    try {
-        return [...map1].filter(arr=>{
-            if(arr[1] === 0){
-                return arr[0];
-            }
-        })[0][0]
-    
-    }catch{
-        return "";
-    }
+  try {
+    const nonRepeatedChar: string | undefined = [...map1].filter(([char, count]) => {
+      return count === 0;
+    })[0][0];
 
+    return nonRepeatedChar || "";
+  } catch {
+    return "";
+  }
 }
 
-console.log(firstNonRepeated("hheellooS"))
+console.log(firstNonRepeated("bob"));
